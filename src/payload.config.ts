@@ -89,4 +89,9 @@ export default buildConfig({
     },
     tasks: [],
   },
+  upload: {
+    limits: {
+      fileSize: 50000000, // 50MB, written in bytes
+    },
+  },
 })
