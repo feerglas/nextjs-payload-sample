@@ -1,4 +1,6 @@
 // import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -89,6 +91,15 @@ export const plugins: Plugin[] = [
         return [...defaultFields, ...searchFields]
       },
     },
+  }),
+  vercelBlobStorage({
+    enabled: true,
+    // Specify which collections should use Vercel Blob
+    collections: {
+      media: true,
+    },
+    // Token provided by Vercel once Blob storage is added to your Vercel project
+    token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
   // payloadCloudPlugin(),
 ]
