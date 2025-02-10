@@ -14,8 +14,8 @@ import PageClient from './page.client'
 import Link from "next/link";
 import { Post, Author } from '@/payload-types'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+// export const dynamic = 'force-static'
+// export const revalidate = 600
 
 
 
