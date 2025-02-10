@@ -15,7 +15,7 @@ import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import { populateAuthors } from './hooks/populateAuthors'
+// import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 
 import {
@@ -71,6 +71,11 @@ export const Posts: CollectionConfig<'posts'> = {
   fields: [
     {
       name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'summary',
       type: 'text',
       required: true,
     },
@@ -191,7 +196,7 @@ export const Posts: CollectionConfig<'posts'> = {
         position: 'sidebar',
       },
       hasMany: true,
-      relationTo: 'users',
+      relationTo: 'authors',
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
@@ -221,7 +226,7 @@ export const Posts: CollectionConfig<'posts'> = {
   ],
   hooks: {
     afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
+    // afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
   },
   versions: {

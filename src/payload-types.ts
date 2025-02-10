@@ -16,6 +16,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    authors: Author;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -32,6 +33,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    authors: AuthorsSelect<false> | AuthorsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -158,6 +160,7 @@ export interface Page {
 export interface Post {
   id: string;
   title: string;
+  summary: string;
   heroImage?: (string | null) | Media;
   content: {
     root: {
@@ -185,7 +188,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (string | Author)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -313,21 +316,16 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "authors".
  */
-export interface User {
+export interface Author {
   id: string;
-  name?: string | null;
+  name: string;
+  image?: (string | null) | Media;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -672,6 +670,24 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -861,6 +877,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'authors';
+        value: string | Author;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1065,6 +1085,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  summary?: T;
   heroImage?: T;
   content?: T;
   relatedPosts?: T;
@@ -1218,6 +1239,18 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors_select".
+ */
+export interface AuthorsSelect<T extends boolean = true> {
+  name?: T;
+  image?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

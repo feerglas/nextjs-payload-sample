@@ -1,73 +1,82 @@
 import { formatDateTime } from 'src/utilities/formatDateTime'
 import React from 'react'
 
-import type { Post } from '@/payload-types'
+import type { Post, Author } from '@/payload-types'
 
 import { Media } from '@/components/Media'
-import { formatAuthors } from '@/utilities/formatAuthors'
+import Avatar from '@/components/Avatar'
+import DateComponent from '@/components/Date'
 
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, heroImage, populatedAuthors, publishedAt, title } = post
-
-  const hasAuthors =
-    populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
+  const { categories, heroImage, authors, publishedAt, title } = post
+  const hasAuthors = authors && authors.length > 0;
+  const typedAuthors = authors as Author[];
 
   return (
-    <div className="relative -mt-[10.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="uppercase text-sm mb-6">
-            {categories?.map((category, index) => {
-              if (typeof category === 'object' && category !== null) {
-                const { title: categoryTitle } = category
+    <div className="">
+      <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        {title}
+      </h1>
 
-                const titleToUse = categoryTitle || 'Untitled category'
 
-                const isLast = index === categories.length - 1
+      {hasAuthors && typedAuthors.map((author, index) => (
+        <div className="hidden md:mb-12 md:block" key={index}>
+          {author.image && typeof author.image !== 'string' && (
+            <Avatar name={author.name} picture={author.image || null} />
+          )}
+        </div>
+      ))}
 
+
+     
+
+      <div className="mb-8 sm:mx-0 md:mb-16">
+        {heroImage && typeof heroImage !== 'string' && (
+          <Media priority imgClassName="h-auto w-full" resource={heroImage} />
+        )}
+      </div>
+
+      <div className="mx-auto max-w-2xl">
+          <div className="mb-6 block md:hidden">
+            {hasAuthors && typedAuthors.map((author, index) => {
+              if (author.image && typeof author.image !== 'string') {
                 return (
-                  <React.Fragment key={index}>
-                    {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
+                  <Avatar key={index} name={author.name} picture={author.image || null} />
                 )
               }
-              return null
             })}
           </div>
-
-          <div className="">
-            <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl">{title}</h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-            {hasAuthors && (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
-
-                  <p>{formatAuthors(populatedAuthors)}</p>
-                </div>
-              </div>
-            )}
-            {publishedAt && (
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
-
-                <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
-              </div>
-            )}
+          <div className="mb-6 text-lg">
+            <div className="mb-4 text-lg">
+              {publishedAt &&
+                <DateComponent dateString={publishedAt?.toString()} />
+              }
+            </div>
           </div>
         </div>
-      </div>
-      <div className="min-h-[80vh] select-none">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
-        )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
-      </div>
+
+       {/* <div className="uppercase text-sm mb-6">
+        {categories?.map((category, index) => {
+          if (typeof category === 'object' && category !== null) {
+            const { title: categoryTitle } = category
+
+            const titleToUse = categoryTitle || 'Untitled category'
+
+            const isLast = index === categories.length - 1
+
+            return (
+              <React.Fragment key={index}>
+                {titleToUse}
+                {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
+              </React.Fragment>
+            )
+          }
+          return null
+        })}
+      </div> */}
+
     </div>
   )
 }

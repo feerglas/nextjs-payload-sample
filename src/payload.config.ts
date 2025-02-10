@@ -11,6 +11,7 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { Authors } from './collections/Authors'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -26,9 +27,6 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -62,7 +60,14 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Authors,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

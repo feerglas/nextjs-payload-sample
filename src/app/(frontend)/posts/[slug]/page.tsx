@@ -14,6 +14,7 @@ import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import Link from 'next/link'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -50,7 +51,8 @@ export default async function Post({ params: paramsPromise }: Args) {
   if (!post) return <PayloadRedirects url={url} />
 
   return (
-    <article className="pt-16 pb-16">
+    <div>
+    <div className="container mx-auto px-5">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -58,20 +60,25 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
+      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+        <Link href="/posts" className="hover:underline">
+          SAGW News
+        </Link>
+      </h2>
+
       <PostHero post={post} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
-          )}
-        </div>
+      <div className="container mx-auto px-5">
+      <RichText className="mx-auto max-w-2xl" data={post.content} enableGutter={false} />
+        {post.relatedPosts && post.relatedPosts.length > 0 && (
+          <RelatedPosts
+            className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
+            docs={post.relatedPosts.filter((post) => typeof post === 'object')}
+          />
+        )}
       </div>
-    </article>
+    </div>
+    </div>
   )
 }
 

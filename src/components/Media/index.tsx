@@ -8,6 +8,8 @@ import { VideoMedia } from './VideoMedia'
 export const Media: React.FC<Props> = (props) => {
   const { className, htmlElement = 'div', resource } = props
 
+  const classes = className + ' h-full';
+
   const isVideo = typeof resource === 'object' && resource?.mimeType?.includes('video')
   const Tag = htmlElement || Fragment
 
@@ -15,7 +17,7 @@ export const Media: React.FC<Props> = (props) => {
     <Tag
       {...(htmlElement !== null
         ? {
-            className,
+            className: classes,
           }
         : {})}
     >
