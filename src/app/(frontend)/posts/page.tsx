@@ -107,6 +107,7 @@ export default async function Page() {
     depth: 2,
     limit: 12,
     overrideAccess: false,
+    locale: 'en',
     // select: {
     //   title: true,
     //   slug: true,
@@ -116,9 +117,6 @@ export default async function Page() {
   })
 
   const heroPost = posts.docs[0];
-
-
-  console.log(heroPost);
   
 
   return (

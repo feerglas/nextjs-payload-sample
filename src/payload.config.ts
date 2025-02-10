@@ -94,4 +94,26 @@ export default buildConfig({
     },
     tasks: [],
   },
+  localization: {
+    locales: [
+      {
+        label: 'Deutsch',
+        code: 'de',
+      },
+      {
+        label: 'Französisch',
+        code: 'fr',
+      },
+      {
+        label: 'Italienisch',
+        code: 'it',
+      },
+      {
+        label: 'Englisch',
+        code: 'en',
+      }
+    ],
+    defaultLocale: 'de',
+    fallback: true,
+  },
 })

@@ -18,6 +18,7 @@ export default async function MoreStories(params: {
     collection: 'posts',
     depth: 2,
     limit: 12,
+    locale: 'en',
     overrideAccess: false,
     // select: {
     //   title: true,
