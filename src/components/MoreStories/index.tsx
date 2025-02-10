@@ -20,6 +20,11 @@ export default async function MoreStories(params: {
     limit: 12,
     locale: 'en',
     overrideAccess: false,
+    where: {
+      id: {
+        not_equals: params.skip
+      }
+    }
     // select: {
     //   title: true,
     //   slug: true,
