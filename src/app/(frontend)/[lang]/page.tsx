@@ -11,6 +11,9 @@ import Link from "next/link";
 import { Post, Author, Config, Pageglobal } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 
+export const dynamic = 'force-static'
+export const revalidate = 600
+
 function Intro(props: { title: string | null | undefined; description?: string | null | undefined }) {
   return (
     <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
