@@ -5,11 +5,12 @@ import Link from "next/link";
 import Avatar from "../Avatar";
 import { Media } from '@/components/Media'
 import DateComponent from "../Date";
-import type { Author } from '@/payload-types'
+import type { Author, Config } from '@/payload-types'
 
 export default async function MoreStories(params: {
   skip: string;
   limit: number;
+  lang: Config['locale'];
 }) {
 
   const payload = await getPayload({ config: configPromise })
@@ -18,7 +19,7 @@ export default async function MoreStories(params: {
     collection: 'posts',
     depth: 2,
     limit: 12,
-    locale: 'en',
+    locale: params.lang,
     overrideAccess: false,
     where: {
       id: {
@@ -44,13 +45,13 @@ export default async function MoreStories(params: {
 
           return (
             <article key={id}>
-              <Link href={`/posts/${slug}`} className="group mb-5 block">
+              <Link href={`/${params.lang}/posts/${slug}`} className="group mb-5 block">
                 {heroImage &&
                   <Media resource={heroImage} priority={false} />
                 }
               </Link>
               <h3 className="text-balance mb-3 text-3xl leading-snug">
-                <Link href={`/posts/${slug}`} className="hover:underline">
+                <Link href={`/${params.lang}/posts/${slug}`} className="hover:underline">
                   {title}
                 </Link>
               </h3>

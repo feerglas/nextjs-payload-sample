@@ -8,7 +8,7 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
-import type { Post } from '@/payload-types'
+import type { Post, Config } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -29,8 +29,22 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
+  const locales = [
+    'de',
+    'en',
+    'fr',
+    'it',
+  ];
+
+  const params: any = [];
+
+  posts.docs.forEach(({ slug }) => {
+    locales.forEach((lang) => {
+      params.push({
+        slug,
+        lang,
+      })
+    })
   })
 
   return params
@@ -39,14 +53,15 @@ export async function generateStaticParams() {
 type Args = {
   params: Promise<{
     slug?: string
+    lang: Config['locale']
   }>
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '' } = await paramsPromise
+  const { slug = '', lang } = await paramsPromise
   const url = '/posts/' + slug
-  const post = await queryPostBySlug({ slug })
+  const post = await queryPostBySlug({ slug, lang })
 
   if (!post) return <PayloadRedirects url={url} />
 
@@ -61,7 +76,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/posts" className="hover:underline">
+        <Link href={`/${lang}`} className="hover:underline">
           SAGW News
         </Link>
       </h2>
@@ -83,13 +98,13 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
-  const post = await queryPostBySlug({ slug })
+  const { slug = '', lang } = await paramsPromise
+  const post = await queryPostBySlug({ slug, lang })
 
   return generateMeta({ doc: post })
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPostBySlug = cache(async ({ slug, lang }: { slug: string, lang: Config['locale'] }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
@@ -98,7 +113,7 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
     collection: 'posts',
     draft,
     limit: 1,
-    locale: 'de',
+    locale: lang,
     overrideAccess: draft,
     pagination: false,
     where: {
