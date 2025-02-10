@@ -8,7 +8,8 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import Link from "next/link";
-import { Post, Author, Config } from '@/payload-types'
+import { Post, Author, Config, Pageglobal } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 
 function Intro(props: { title: string | null | undefined; description?: string | null | undefined }) {
   return (
@@ -84,12 +85,14 @@ export default async function Page({ params }: {
     locale: lang,
   })
 
+  const globalsData: Pageglobal = await getCachedGlobal('pageglobal', 1, lang)()
+
   const heroPost = posts.docs[0];
 
   return (
     <div className="container mx-auto px-5">
       <PageClient />
-      <Intro title='SAGW News' description='Alle News der SAGW' />
+      <Intro title={globalsData.postsTitle} description={globalsData.postsSubtitle} />
       <HeroPost
         title={heroPost?.title || ''}
         slug={heroPost?.slug}
@@ -102,7 +105,7 @@ export default async function Page({ params }: {
 
       <aside>
         <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-          More Stories
+          {globalsData.moreStoriesTitle}
         </h2>
         <MoreStories skip={heroPost?.id || ''} limit={100} lang={lang} />
       </aside>

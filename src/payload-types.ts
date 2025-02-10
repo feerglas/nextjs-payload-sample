@@ -49,10 +49,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    pageglobal: Pageglobal;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    pageglobal: PageglobalSelect<false> | PageglobalSelect<true>;
   };
   locale: 'de' | 'fr' | 'it' | 'en';
   user: User & {
@@ -1565,6 +1567,18 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageglobal".
+ */
+export interface Pageglobal {
+  id: string;
+  postsTitle?: string | null;
+  postsSubtitle?: string | null;
+  moreStoriesTitle?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1605,6 +1619,18 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pageglobal_select".
+ */
+export interface PageglobalSelect<T extends boolean = true> {
+  postsTitle?: T;
+  postsSubtitle?: T;
+  moreStoriesTitle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
