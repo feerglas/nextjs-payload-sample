@@ -24,10 +24,21 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    meta: {
+      titleSuffix: '- SAGW Editor',
+      icons: [{
+        url: '/favicon.svg',
+        color: '#000000',
+      }],
+    },
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin'],
+      graphics: {
+        Logo: '@/components/admin-graphics/logo',
+        Icon: '@/components/admin-graphics/icon',
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
