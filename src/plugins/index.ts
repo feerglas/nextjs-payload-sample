@@ -18,7 +18,7 @@ import { Media } from '@/collections/Media'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | SAGW - News` : 'SAGW - News'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {

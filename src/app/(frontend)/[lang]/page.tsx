@@ -118,6 +118,6 @@ export default async function Page({ params }: {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: `SAGW - News`,
   }
 }
