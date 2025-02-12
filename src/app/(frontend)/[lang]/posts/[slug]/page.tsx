@@ -81,7 +81,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         </Link>
       </h2>
 
-      <PostHero post={post} />
+      <PostHero post={post} lang={lang} />
 
       <div className="container mx-auto px-5">
       <RichText className="mx-auto max-w-2xl" data={post.content} enableGutter={false} />

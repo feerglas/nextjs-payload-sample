@@ -8,8 +8,9 @@ import Avatar from '@/components/Avatar'
 import DateComponent from '@/components/Date'
 
 export const PostHero: React.FC<{
-  post: Post
-}> = ({ post }) => {
+  post: Post,
+  lang: string
+}> = ({ post, lang }) => {
   const { categories, heroImage, authors, publishedAt, title } = post
   const hasAuthors = authors && authors.length > 0;
   const typedAuthors = authors as Author[];
@@ -51,7 +52,7 @@ export const PostHero: React.FC<{
           <div className="mb-6 text-lg">
             <div className="mb-4 text-lg">
               {publishedAt &&
-                <DateComponent dateString={publishedAt?.toString()} />
+                <DateComponent dateString={publishedAt?.toString()} locale={lang} />
               }
             </div>
           </div>

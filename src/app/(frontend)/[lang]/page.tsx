@@ -51,7 +51,7 @@ Exclude<Post, null>,
             </Link>
           </h3>
           <div className="mb-4 text-lg md:mb-0">
-            <DateComponent dateString={params.publishedAt || ''} />
+            <DateComponent dateString={params.publishedAt || ''} locale={params.lang} />
           </div>
         </div>
         <div>
