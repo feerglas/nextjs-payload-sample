@@ -71,6 +71,7 @@ export default buildConfig({
   editor: defaultLexical,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+    transactionOptions: false,
   }),
   collections: [
     Pages,

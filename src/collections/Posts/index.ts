@@ -77,9 +77,18 @@ export const Posts: CollectionConfig<'posts'> = {
     },
     {
       name: 'summary',
-      type: 'text',
+      type: 'textarea',
       required: true,
       localized: true,
+    },
+    {
+      name: 'generateSummary',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/GenerateSummary',
+        }
+      }
     },
     {
       type: 'tabs',
