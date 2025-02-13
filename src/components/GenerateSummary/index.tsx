@@ -4,27 +4,12 @@ import { Button } from "@payloadcms/ui";
 import { useAllFormFields, useDocumentInfo } from '@payloadcms/ui'
 import { getSummaryFromOpenAi } from "./server";
 import type { DefaultTypedEditorState } from "@payloadcms/richtext-lexical";
-import { SerializedLexicalNode } from "@payloadcms/richtext-lexical/lexical";
-import { DefaultNodeTypes } from "@payloadcms/richtext-lexical";
 
 const GenerateSummaryButton = () => {
   const [, dispatchFields] = useAllFormFields();
 
   const doc = useDocumentInfo();
 
-  let content = '';
-  const rteContent: DefaultTypedEditorState = doc.initialData?.content;
-  
-
-  rteContent.root.children.forEach((child) => {
-    const children: (SerializedLexicalNode | DefaultNodeTypes)[] | undefined = child.children;
-    children?.forEach((childchild) => {
-      if (childchild.type === 'text') {
-        content += childchild.text;
-      }
-    })
-    
-  })
 
   return (
     <Button
@@ -33,6 +18,23 @@ const GenerateSummaryButton = () => {
           type: 'REMOVE',
           path: 'summary',
         })
+
+        let content = '';
+        const rteContent: DefaultTypedEditorState = doc.savedDocumentData?.content;
+        
+        console.log(doc);
+
+        rteContent.root.children.forEach((child) => {
+          const children = child.children;
+          children?.forEach((childchild: any) => {
+            if (childchild.type === 'text') {
+              content += childchild.text;
+            }
+          })
+          
+        })
+
+        console.log(content);
 
         const summary = await getSummaryFromOpenAi(content);
 
