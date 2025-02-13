@@ -21,8 +21,6 @@ const GenerateSummaryButton = () => {
 
         let content = '';
         const rteContent: DefaultTypedEditorState = doc.savedDocumentData?.content;
-        
-        console.log(doc);
 
         rteContent.root.children.forEach((child) => {
           const children = child.children;
@@ -33,8 +31,6 @@ const GenerateSummaryButton = () => {
           })
           
         })
-
-        console.log(content);
 
         const summary = await getSummaryFromOpenAi(content);
 
