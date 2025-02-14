@@ -4,9 +4,11 @@ import { Button } from "@payloadcms/ui";
 import { useAllFormFields, useDocumentInfo } from '@payloadcms/ui'
 import { getSummaryFromOpenAi } from "./server";
 import type { DefaultTypedEditorState } from "@payloadcms/richtext-lexical";
+import { useForm } from "@payloadcms/ui";
 
 const GenerateSummaryButton = () => {
   const [, dispatchFields] = useAllFormFields();
+  const { setModified } = useForm();
 
   const doc = useDocumentInfo();
 
@@ -39,6 +41,8 @@ const GenerateSummaryButton = () => {
           path: 'summary',
           value: summary,
         })
+
+        setModified(true);
 
       }}
     >
