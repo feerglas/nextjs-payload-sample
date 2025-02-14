@@ -44,8 +44,10 @@ export const revalidateDelete: CollectionAfterDeleteHook<Post> = ({ doc, req }) 
     const lang = url.get('locale') || 'de';
 
     const path = `${lang}/posts/${doc?.slug}`
+    const home = `/${lang}`
 
     revalidatePath(path)
+    revalidatePath(home)
     revalidateTag('posts-sitemap')
   }
 
