@@ -15,10 +15,13 @@ export const revalidatePost: CollectionAfterChangeHook<Post> = ({
 
     if (doc._status === 'published') {
       const path = `/${lang}/posts/${doc.slug}`
+      const home = `/${lang}`
 
       req.payload.logger.info(`Revalidating post at path: ${path}`)
+      req.payload.logger.info(`Revalidating home at path: ${home}`)
 
       revalidatePath(path)
+      revalidatePath(home)
       revalidateTag('posts-sitemap')
     }
 
