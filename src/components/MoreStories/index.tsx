@@ -1,6 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import Link from "next/link";
+import { Link } from 'next-view-transitions'
 
 import Avatar from "../Avatar";
 import { Media } from '@/components/Media'

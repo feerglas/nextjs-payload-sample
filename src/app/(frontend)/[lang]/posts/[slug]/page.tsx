@@ -14,7 +14,7 @@ import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import Link from 'next/link'
+import { Link } from 'next-view-transitions'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 
 export async function generateStaticParams() {

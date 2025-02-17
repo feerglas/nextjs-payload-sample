@@ -7,7 +7,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
-import Link from "next/link";
+import { Link } from 'next-view-transitions'
 import { Post, Author, Config, Pageglobal } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 
