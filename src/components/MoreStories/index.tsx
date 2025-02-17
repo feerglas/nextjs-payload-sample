@@ -45,7 +45,7 @@ export default async function MoreStories(params: {
 
           return (
             <article key={id}>
-              <Link href={`/${params.lang}/posts/${slug}`} className="group mb-5 block">
+              <Link href={`/${params.lang}/posts/${slug}`} className="group mb-5 block border-2 hover:border-black">
                 {heroImage &&
                   <Media resource={heroImage} priority={false} />
                 }

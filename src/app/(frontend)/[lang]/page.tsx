@@ -38,7 +38,7 @@ Exclude<Post, null>,
 
   return (
     <article>
-      <Link className="group mb-8 block md:mb-16" href={`${params.lang}/posts/${params.slug}`}>
+      <Link className="group mb-8 block md:mb-16 border-2 hover:border-black" href={`${params.lang}/posts/${params.slug}`}>
         {params.heroImage &&
           <Media resource={params.heroImage} priority />
         }
