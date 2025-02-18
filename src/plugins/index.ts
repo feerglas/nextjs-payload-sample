@@ -3,7 +3,7 @@ import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { Plugin } from 'payload'
+import { isEntityHidden, Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -31,13 +31,15 @@ export const plugins: Plugin[] = [
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
-      // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
+
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'from') {
             return {
               ...field,
               admin: {
+                hidden: true,
+                disableListColumn: true,
                 description: 'You will need to rebuild the website when changing this field.',
               },
             }
@@ -59,10 +61,18 @@ export const plugins: Plugin[] = [
     generateURL,
   }),
   formBuilderPlugin({
+    formSubmissionOverrides: {
+      admin: {
+        hidden: true,
+      }
+    },
     fields: {
       payment: false,
     },
     formOverrides: {
+      admin: {
+        hidden: true,
+      },
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'confirmationMessage') {
@@ -88,6 +98,9 @@ export const plugins: Plugin[] = [
     collections: ['posts'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
+      admin: {
+        hidden: true,
+      },
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields]
       },

@@ -18,6 +18,7 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { PageGlobal } from './collections/PageGlobal'
+import { de } from '@payloadcms/translations/languages/de'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -82,7 +83,7 @@ export default buildConfig({
     Authors,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, PageGlobal],
+  globals: [PageGlobal],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
@@ -129,4 +130,8 @@ export default buildConfig({
     defaultLocale: 'de',
     fallback: true,
   },
+  i18n: {
+    fallbackLanguage: 'de',
+    supportedLanguages: { de },
+  }
 })
