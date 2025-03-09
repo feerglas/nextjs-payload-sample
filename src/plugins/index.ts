@@ -14,6 +14,7 @@ import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 import { Media } from '@/collections/Media'
+import { Authors } from '@/collections/Authors'
 
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
@@ -111,6 +112,7 @@ export const plugins: Plugin[] = [
     // Specify which collections should use Vercel Blob
     collections: {
       [Media.slug]: true,
+      [Authors.slug]: true,
     },
     // Token provided by Vercel once Blob storage is added to your Vercel project
     token: process.env.BLOB_READ_WRITE_TOKEN,
