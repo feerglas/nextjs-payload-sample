@@ -77,10 +77,6 @@
     "tailwindcss": "^3.4.3",
     "typescript": "5.7.3"
   },
-  "engines": {
-    "node": "21.0.0",
-    "pnpm": "^9"
-  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
