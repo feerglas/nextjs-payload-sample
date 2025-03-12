@@ -13,8 +13,8 @@ import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
-import { Media } from '@/collections/Media'
-import { Authors } from '@/collections/Authors'
+// import { Media } from '@/collections/Media'
+// import { Authors } from '@/collections/Authors'
 
 // import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
