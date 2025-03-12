@@ -14,7 +14,12 @@ export async function GET(request: NextRequest) {
   }
  
   const s3 = new S3Client({
-    region: "gra",
+    credentials: {
+      accessKeyId: process.env.OVH_OS_ACCESS_PUBLIC_KEY || '',
+      secretAccessKey: process.env.OVH_OS_ACCESS_PRIVATE_KEY || '',
+
+    },
+    endpoint: process.env.OVH_OS_IMAGES_BACKUP_CONTAINER_ENDPOINT,
   });
  
   let cursor: string | undefined;
@@ -33,7 +38,7 @@ export async function GET(request: NextRequest) {
             const parallelUploads3 = new Upload({
               client: s3,
               params: {
-                Bucket: 'test-db-backup-aws',
+                Bucket: process.env.OVH_OS_IMAGES_BACKUP_CONTAINER_ID,
                 Key: blob.pathname,
                 Body: Readable.fromWeb(res.body as ReadableStream),
               },
